@@ -3,6 +3,12 @@ import json
 import re
 from datetime import datetime
 
+# 定位仓库根目录（脚本位于 .github/scripts，根目录是其祖父目录）
+SCRIPT_PATH = os.path.abspath(__file__)  # 脚本绝对路径
+SCRIPT_DIR = os.path.dirname(SCRIPT_PATH)  # .github/scripts
+GITHUB_DIR = os.path.dirname(SCRIPT_DIR)  # .github
+REPO_ROOT = os.path.dirname(GITHUB_DIR)  # 仓库根目录（直接包含所有.md文件）
+
 # 配置路径
 BLOG_DIR = REPO_ROOT  # 直接使用根目录作为博客文件目录
 INDEX_PATH = os.path.join(BLOG_DIR, "index.json")
