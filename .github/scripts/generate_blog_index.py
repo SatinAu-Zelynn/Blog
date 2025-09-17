@@ -1,17 +1,21 @@
 import os
 import re
 import json
-from pathlib import Path  # 使用pathlib更可靠地处理路径
+from pathlib import Path
 
-# 基于脚本所在位置计算Blog目录路径（推荐）
-# 脚本路径：.github/scripts/generate_blog_index.py
-# 因此仓库根目录为脚本目录的上两级（.. 表示上一级）
-SCRIPT_DIR = Path(__file__).parent  # 脚本所在目录（.github/scripts）
-REPO_ROOT = SCRIPT_DIR.parent.parent  # 仓库根目录
-BLOG_DIR = REPO_ROOT / "Blog"  # 拼接Blog目录路径（绝对路径，更可靠）
+# 脚本路径调试：打印关键路径，帮助定位问题
+SCRIPT_PATH = Path(__file__).resolve()  # 脚本绝对路径
+SCRIPT_DIR = SCRIPT_PATH.parent  # 脚本所在目录（.github/scripts）
+REPO_ROOT = SCRIPT_DIR.parent.parent  # 仓库根目录（.github的父目录）
+BLOG_DIR = REPO_ROOT / "Blog"  # Blog目录路径
 INDEX_PATH = BLOG_DIR / "index.json"
 
-# 扩展日期提取正则（保持不变）
+# 打印路径调试信息（关键！用于确认实际路径是否正确）
+print(f"脚本绝对路径: {SCRIPT_PATH}")
+print(f"仓库根目录路径: {REPO_ROOT}")
+print(f"Blog目录路径: {BLOG_DIR}")
+
+# 日期提取正则（保持不变）
 DATE_PATTERNS = [
     re.compile(r'(\d{4})年(\d{1,2})月(\d{1,2})日'),
     re.compile(r'(\d{4})年(\d{1,2})月'),
@@ -47,18 +51,24 @@ def extract_date(content: str, filename: str) -> str:
 
 def main():
     try:
-        # 检查Blog目录是否存在
+        # 检查Blog目录是否存在（带详细错误信息）
         if not BLOG_DIR.exists():
-            raise FileNotFoundError(f"Blog目录不存在，请确认路径：{BLOG_DIR}")
+            # 列出仓库根目录下的文件/目录，辅助排查结构
+            root_contents = os.listdir(REPO_ROOT) if REPO_ROOT.exists() else []
+            raise FileNotFoundError(
+                f"Blog目录不存在！\n"
+                f"预期路径: {BLOG_DIR}\n"
+                f"仓库根目录实际内容: {root_contents}"
+            )
         if not BLOG_DIR.is_dir():
-            raise NotADirectoryError(f"{BLOG_DIR} 不是一个目录")
+            raise NotADirectoryError(f"{BLOG_DIR} 不是目录（可能是文件）")
         
         articles = []
-        # 遍历Markdown文件（使用pathlib的glob更可靠）
+        # 遍历Blog目录下的md文件
         for md_file in BLOG_DIR.glob("*.md"):
             filename = md_file.name
             if filename == "index.md":
-                continue  # 跳过index.md
+                continue
             
             # 读取文件内容
             try:
