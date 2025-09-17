@@ -2,7 +2,7 @@ name: Update Blog Index
 on:
   push:
     branches: [main]
-    paths: ['Blog/**/*.md']  # 仅当 MD 文件变更时触发
+    paths: ['Blog/*.md']  # 仅当 MD 文件变更时触发
   schedule:
     - cron: '0 0 * * *'  # 每日凌晨更新（可选）
 
