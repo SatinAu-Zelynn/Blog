@@ -11,6 +11,8 @@ on:
 jobs:
   update-index:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write  # 授予写入仓库内容的权限
     steps:
       - name: 拉取代码
         uses: actions/checkout@v4
