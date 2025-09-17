@@ -1,16 +1,9 @@
-name: 检查目录结构
-
-run: |
-  echo "当前目录：$(pwd)"
-  echo "仓库根目录文件列表："
-  ls -la
-  echo "Blog目录是否存在："
-  if [ -d "Blog" ]; then echo "存在"; else echo "不存在"; fi
+name: 自动更新博客索引
 
 on:
   push:
     paths:
-      - 'Blog/*.md'
+      - 'Blog/**/*.md'
   workflow_dispatch:
 
 jobs:
@@ -25,6 +18,14 @@ jobs:
         with:
           python-version: '3.11'
 
+      - name: 检查目录结构
+        run: |
+          echo "当前目录：$(pwd)"
+          echo "仓库根目录文件列表："
+          ls -la
+          echo "Blog目录是否存在："
+          if [ -d "Blog" ]; then echo "存在"; else echo "不存在"; fi
+    
       - name: 运行索引生成脚本（带错误输出）
         run: |
           python .github/scripts/generate_blog_index.py || { echo "脚本执行失败"; exit 1; }
