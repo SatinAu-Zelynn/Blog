@@ -20,6 +20,14 @@ jobs:
         with:
           python-version: "3.11"
 
+      - name: 检查根目录结构
+        run: |
+          echo "当前工作目录：$(pwd)"
+          echo "根目录文件列表："
+          ls -la  # 查看根目录下是否有Blog文件夹
+          echo "Blog目录内容："
+          ls -la Blog  # 查看Blog目录下的md文件
+
       - name: 运行索引生成脚本
         run: python .github/scripts/generate_blog_index.py
 
