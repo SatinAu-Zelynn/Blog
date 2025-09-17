@@ -4,8 +4,9 @@ on:
   push:
     branches: [ main ]
     paths:
-      - 'Blog/**/*.md'  # 当Blog目录下的md文件变更时触发
-      - '.github/scripts/generate_blog_index.py'  # 脚本本身变更时也触发
+      - 'Blog/**/*.md'
+      - '.github/scripts/generate_blog_index.py'
+  workflow_dispatch:  # 新增：允许手动触发工作流
 
 jobs:
   update-index:
@@ -26,4 +27,4 @@ jobs:
         uses: stefanzweifel/git-auto-commit-action@v5
         with:
           commit_message: "自动更新博客索引 index.json"
-          file_pattern: "Blog/index.json"  # 只提交index.json的变更
+          file_pattern: "Blog/index.json"
