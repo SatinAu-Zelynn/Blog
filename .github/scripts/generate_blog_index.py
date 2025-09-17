@@ -3,15 +3,15 @@ import json
 import re
 from datetime import datetime
 
-# 定位根目录（脚本位于 .github/scripts，根目录是其祖父目录）
+# 定位仓库根目录（脚本位于 .github/scripts，根目录是其祖父目录）
 SCRIPT_PATH = os.path.abspath(__file__)  # 脚本绝对路径
 SCRIPT_DIR = os.path.dirname(SCRIPT_PATH)  # .github/scripts
 GITHUB_DIR = os.path.dirname(SCRIPT_DIR)  # .github
-REPO_ROOT = os.path.dirname(GITHUB_DIR)  # 项目根目录（main分支根目录）
+REPO_ROOT = os.path.dirname(GITHUB_DIR)  # 仓库根目录（直接包含所有.md文件）
 
-# 根目录下的Blog文件夹路径
-BLOG_DIR = os.path.join(REPO_ROOT, "Blog")
-INDEX_PATH = os.path.join(BLOG_DIR, "index.json")
+# 根目录即为存放.md文件的目录，index.json也在根目录
+BLOG_DIR = REPO_ROOT  # 直接使用根目录作为博客文件目录
+INDEX_PATH = os.path.join(REPO_ROOT, "index.json")  # 索引文件在根目录
 
 # 日期提取正则（保持不变）
 DATE_PATTERNS = [
@@ -34,26 +34,29 @@ def extract_date(content: str) -> str:
     return datetime.now().strftime("%Y-%m-%d")
 
 def generate_index():
-    # 检查Blog目录是否存在（根目录下）
+    # 检查根目录是否存在（理论上必然存在，仅作提示）
     if not os.path.isdir(BLOG_DIR):
-        raise FileNotFoundError(f"根目录下未找到Blog文件夹，请确认路径：{BLOG_DIR}")
+        raise FileNotFoundError(f"未找到仓库根目录，请检查路径：{BLOG_DIR}")
     
     posts = []
+    # 遍历根目录下的所有文件，仅处理.md文件（排除子目录如image、.github等）
     for filename in os.listdir(BLOG_DIR):
-        if not filename.endswith(".md"):
-            continue
         file_path = os.path.join(BLOG_DIR, filename)
-        with open(file_path, "r", encoding="utf-8") as f:
-            content = f.read()
-        title = filename[:-3]
-        date = extract_date(content)
-        posts.append({
-            "file": filename,
-            "title": title,
-            "date": date
-        })
+        # 跳过目录，只处理以.md结尾的文件
+        if os.path.isfile(file_path) and filename.endswith(".md"):
+            with open(file_path, "r", encoding="utf-8") as f:
+                content = f.read()
+            title = filename[:-3]  # 去掉.md后缀作为标题
+            date = extract_date(content)
+            posts.append({
+                "file": filename,
+                "title": title,
+                "date": date
+            })
     
+    # 按日期倒序排序
     posts.sort(key=lambda x: x["date"], reverse=True)
+    # 写入根目录下的index.json
     with open(INDEX_PATH, "w", encoding="utf-8") as f:
         json.dump(posts, f, ensure_ascii=False, indent=2)
     print(f"已生成索引，共包含 {len(posts)} 篇文章")
