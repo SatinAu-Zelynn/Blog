@@ -3,17 +3,17 @@ import re
 import json
 from pathlib import Path
 
-# 脚本路径调试：打印关键路径，帮助定位问题
-SCRIPT_PATH = Path(__file__).resolve()  # 脚本绝对路径
-SCRIPT_DIR = SCRIPT_PATH.parent  # 脚本所在目录（.github/scripts）
-REPO_ROOT = SCRIPT_DIR.parent.parent  # 仓库根目录（.github的父目录）
-BLOG_DIR = REPO_ROOT / "Blog"  # Blog目录路径
-INDEX_PATH = BLOG_DIR / "index.json"
+# 脚本路径调试
+SCRIPT_PATH = Path(__file__).resolve()
+SCRIPT_DIR = SCRIPT_PATH.parent  # .github/scripts
+REPO_ROOT = SCRIPT_DIR.parent.parent  # 仓库根目录（直接存放所有.md文件）
+BLOG_DIR = REPO_ROOT  # 关键修正：博客文件在仓库根目录，而非Blog子目录
+INDEX_PATH = BLOG_DIR / "index.json"  # index.json也在根目录
 
-# 打印路径调试信息（关键！用于确认实际路径是否正确）
+# 打印路径调试信息
 print(f"脚本绝对路径: {SCRIPT_PATH}")
 print(f"仓库根目录路径: {REPO_ROOT}")
-print(f"Blog目录路径: {BLOG_DIR}")
+print(f"博客文件目录路径: {BLOG_DIR}")  # 现在应与仓库根目录一致
 
 # 日期提取正则（保持不变）
 DATE_PATTERNS = [
@@ -51,40 +51,32 @@ def extract_date(content: str, filename: str) -> str:
 
 def main():
     try:
-        # 检查Blog目录是否存在（带详细错误信息）
+        # 检查博客目录（仓库根目录）是否存在
         if not BLOG_DIR.exists():
-            # 列出仓库根目录下的文件/目录，辅助排查结构
-            root_contents = os.listdir(REPO_ROOT) if REPO_ROOT.exists() else []
-            raise FileNotFoundError(
-                f"Blog目录不存在！\n"
-                f"预期路径: {BLOG_DIR}\n"
-                f"仓库根目录实际内容: {root_contents}"
-            )
+            raise FileNotFoundError(f"博客目录不存在：{BLOG_DIR}")
         if not BLOG_DIR.is_dir():
-            raise NotADirectoryError(f"{BLOG_DIR} 不是目录（可能是文件）")
+            raise NotADirectoryError(f"{BLOG_DIR} 不是目录")
         
         articles = []
-        # 遍历Blog目录下的md文件
-        for md_file in BLOG_DIR.glob("*.md"):
-            filename = md_file.name
-            if filename == "index.md":
-                continue
-            
-            # 读取文件内容
-            try:
-                with open(md_file, "r", encoding="utf-8") as f:
-                    content = f.read()
-            except UnicodeDecodeError:
-                with open(md_file, "r", encoding="gbk") as f:
-                    content = f.read()
-            
-            articles.append({
-                "file": filename,
-                "title": filename[:-3],
-                "date": extract_date(content, filename)
-            })
+        # 遍历根目录下的.md文件，排除非文件（如image/.git/.github等目录）
+        for item in BLOG_DIR.iterdir():
+            if item.is_file() and item.suffix == ".md" and item.name != "index.md":
+                filename = item.name
+                # 读取文件内容
+                try:
+                    with open(item, "r", encoding="utf-8") as f:
+                        content = f.read()
+                except UnicodeDecodeError:
+                    with open(item, "r", encoding="gbk") as f:
+                        content = f.read()
+                
+                articles.append({
+                    "file": filename,
+                    "title": filename[:-3],
+                    "date": extract_date(content, filename)
+                })
         
-        # 排序并写入index.json
+        # 排序并写入index.json（根目录下）
         articles.sort(key=lambda x: x["date"], reverse=True)
         with open(INDEX_PATH, "w", encoding="utf-8") as f:
             json.dump(articles, f, ensure_ascii=False, indent=2)
