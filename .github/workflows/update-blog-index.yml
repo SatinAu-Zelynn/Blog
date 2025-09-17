@@ -6,7 +6,7 @@ on:
     paths:
       - '*.md'
       - '.github/scripts/generate_blog_index.py'
-  workflow_dispatch:  # 新增：允许手动触发工作流
+  workflow_dispatch:  # 允许手动触发工作流
 
 jobs:
   update-index:
@@ -27,4 +27,4 @@ jobs:
         uses: stefanzweifel/git-auto-commit-action@v5
         with:
           commit_message: "自动更新博客索引 index.json"
-          file_pattern: "Blog/index.json"
+          file_pattern: "index.json"
