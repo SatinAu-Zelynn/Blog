@@ -1,43 +1,42 @@
 import os
 import re
 import json
-from datetime import datetime
+from pathlib import Path  # 使用pathlib更可靠地处理路径
 
-# 配置路径（确保与实际仓库结构一致）
-BLOG_DIR = "Blog"
-INDEX_PATH = os.path.join(BLOG_DIR, "index.json")
+# 基于脚本所在位置计算Blog目录路径（推荐）
+# 脚本路径：.github/scripts/generate_blog_index.py
+# 因此仓库根目录为脚本目录的上两级（.. 表示上一级）
+SCRIPT_DIR = Path(__file__).parent  # 脚本所在目录（.github/scripts）
+REPO_ROOT = SCRIPT_DIR.parent.parent  # 仓库根目录
+BLOG_DIR = REPO_ROOT / "Blog"  # 拼接Blog目录路径（绝对路径，更可靠）
+INDEX_PATH = BLOG_DIR / "index.json"
 
-# 扩展日期提取正则（支持更多格式）
+# 扩展日期提取正则（保持不变）
 DATE_PATTERNS = [
-    re.compile(r'(\d{4})年(\d{1,2})月(\d{1,2})日'),  # 2025年8月27日
-    re.compile(r'(\d{4})年(\d{1,2})月'),            # 2025年6月
-    re.compile(r'(\d{4})-(\d{1,2})-(\d{1,2})'),     # 2025-08-27
-    re.compile(r'(\d{2})年(\d{1,2})月(\d{1,2})日')  # 44年6月6日（诺曼底登陆）
+    re.compile(r'(\d{4})年(\d{1,2})月(\d{1,2})日'),
+    re.compile(r'(\d{4})年(\d{1,2})月'),
+    re.compile(r'(\d{4})-(\d{1,2})-(\d{1,2})'),
+    re.compile(r'(\d{2})年(\d{1,2})月(\d{1,2})日')
 ]
 
 def extract_date(content: str, filename: str) -> str:
-    """增强版日期提取逻辑"""
-    # 1. 从文件内容提取日期
+    # 保持原逻辑不变
     for pattern in DATE_PATTERNS:
         match = pattern.search(content)
         if match:
             groups = match.groups()
-            # 处理年份（如"44年"转换为1944年）
             year = groups[0]
             if len(year) == 2:
-                year = f"19{year}"  # 适用于20世纪事件
+                year = f"19{year}"
             month = groups[1].zfill(2)
-            day = groups[2].zfill(2) if len(groups) > 2 else "01"  # 缺少年份补1日
+            day = groups[2].zfill(2) if len(groups) > 2 else "01"
             return f"{year}-{month}-{day}"
     
-    # 2. 从文件名提取日期（如"6月12日世界无童工日"）
     filename_match = re.search(r'(\d{1,2})月(\d{1,2})日', filename)
     if filename_match:
         month, day = filename_match.groups()
-        # 假设文件名中的日期为当前年份（可根据实际需求调整）
         return f"2025-{month.zfill(2)}-{day.zfill(2)}"
     
-    # 3. 特殊文件手动映射（补充更多实际案例）
     special_cases = {
         "For ALL women and girls.md": "2025-03-08",
         "72年前的今天.md": "2025-07-27",
@@ -48,37 +47,35 @@ def extract_date(content: str, filename: str) -> str:
 
 def main():
     try:
+        # 检查Blog目录是否存在
+        if not BLOG_DIR.exists():
+            raise FileNotFoundError(f"Blog目录不存在，请确认路径：{BLOG_DIR}")
+        if not BLOG_DIR.is_dir():
+            raise NotADirectoryError(f"{BLOG_DIR} 不是一个目录")
+        
         articles = []
-        # 遍历所有Markdown文件
-        for filename in os.listdir(BLOG_DIR):
-            if not filename.endswith(".md") or filename == "index.md":
-                continue
+        # 遍历Markdown文件（使用pathlib的glob更可靠）
+        for md_file in BLOG_DIR.glob("*.md"):
+            filename = md_file.name
+            if filename == "index.md":
+                continue  # 跳过index.md
             
-            file_path = os.path.join(BLOG_DIR, filename)
-            # 跳过目录（只处理文件）
-            if not os.path.isfile(file_path):
-                continue
-            
-            # 读取文件内容（兼容不同编码）
+            # 读取文件内容
             try:
-                with open(file_path, "r", encoding="utf-8") as f:
+                with open(md_file, "r", encoding="utf-8") as f:
                     content = f.read()
             except UnicodeDecodeError:
-                # 尝试其他编码
-                with open(file_path, "r", encoding="gbk") as f:
+                with open(md_file, "r", encoding="gbk") as f:
                     content = f.read()
             
-            # 提取信息
             articles.append({
                 "file": filename,
                 "title": filename[:-3],
                 "date": extract_date(content, filename)
             })
         
-        # 按日期降序排序
+        # 排序并写入index.json
         articles.sort(key=lambda x: x["date"], reverse=True)
-        
-        # 写入index.json
         with open(INDEX_PATH, "w", encoding="utf-8") as f:
             json.dump(articles, f, ensure_ascii=False, indent=2)
             
