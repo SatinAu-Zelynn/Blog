@@ -1,0 +1,31 @@
+name: 自动更新博客索引
+
+# 触发条件：当Blog目录下的md文件被推送或手动触发
+on:
+  push:
+    paths:
+      - 'Blog/**/*.md'
+  workflow_dispatch:
+
+jobs:
+  update-index:
+    runs-on: ubuntu-latest
+    steps:
+      - name: 拉取代码仓库
+        uses: actions/checkout@v4
+
+      - name: 配置Python环境
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: 运行索引生成脚本
+        run: python .github/scripts/generate_blog_index.py
+
+      - name: 提交更新到仓库
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git add Blog/index.json
+          git commit -m "自动更新博客索引 $(date +'%Y-%m-%d')" || echo "无更新需要提交"
+          git push
