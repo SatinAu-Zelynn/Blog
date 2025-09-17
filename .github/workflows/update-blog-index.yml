@@ -1,10 +1,9 @@
 name: 自动更新博客索引
 
-# 触发条件：当Blog目录下的md文件被推送或手动触发
 on:
   push:
     paths:
-      - 'Blog/**/*.md'
+      - 'Blog/*.md'
   workflow_dispatch:
 
 jobs:
@@ -19,8 +18,9 @@ jobs:
         with:
           python-version: '3.11'
 
-      - name: 运行索引生成脚本
-        run: python .github/scripts/generate_blog_index.py
+      - name: 运行索引生成脚本（带错误输出）
+        run: |
+          python .github/scripts/generate_blog_index.py || { echo "脚本执行失败"; exit 1; }
 
       - name: 提交更新到仓库
         run: |
