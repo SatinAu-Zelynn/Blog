@@ -1,0 +1,33 @@
+name: Update Blog Index
+on:
+  push:
+    branches: [main]
+    paths: ['Blog/**/*.md']  # 仅当 MD 文件变更时触发
+  schedule:
+    - cron: '0 0 * * *'  # 每日凌晨更新（可选）
+
+jobs:
+  build-index:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout 代码
+        uses: actions/checkout@v4
+
+      - name: 设置 Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: 安装依赖
+        run: pip install python-frontmatter  # 用于解析 MD 元数据
+
+      - name: 生成 index.json
+        run: python scripts/update_index.py  # 执行脚本
+
+      - name: 提交更新
+        run: |
+          git config --global user.name "GitHub Action"
+          git config --global user.email "action@github.com"
+          git add Blog/index.json
+          git commit -m "Auto update index.json" || echo "No changes to commit"
+          git push
