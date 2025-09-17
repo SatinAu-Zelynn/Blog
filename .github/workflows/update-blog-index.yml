@@ -2,38 +2,28 @@ name: 自动更新博客索引
 
 on:
   push:
+    branches: [ main ]
     paths:
-      - 'Blog/**/*.md'
-  workflow_dispatch:
+      - 'Blog/**/*.md'  # 当Blog目录下的md文件变更时触发
+      - '.github/scripts/generate_blog_index.py'  # 脚本本身变更时也触发
 
 jobs:
   update-index:
     runs-on: ubuntu-latest
     steps:
-      - name: 拉取代码仓库
+      - name: 拉取代码
         uses: actions/checkout@v4
 
       - name: 配置Python环境
         uses: actions/setup-python@v5
         with:
-          python-version: '3.11'
+          python-version: "3.11"
 
-      - name: 检查目录结构
-        run: |
-          echo "当前目录：$(pwd)"
-          echo "仓库根目录文件列表："
-          ls -la
-          echo "Blog目录是否存在："
-          if [ -d "Blog" ]; then echo "存在"; else echo "不存在"; fi
-    
-      - name: 运行索引生成脚本（带错误输出）
-        run: |
-          python .github/scripts/generate_blog_index.py || { echo "脚本执行失败"; exit 1; }
+      - name: 运行索引生成脚本
+        run: python .github/scripts/generate_blog_index.py
 
-      - name: 提交更新到仓库
-        run: |
-          git config --global user.name "github-actions[bot]"
-          git config --global user.email "github-actions[bot]@users.noreply.github.com"
-          git add Blog/index.json
-          git commit -m "自动更新博客索引 $(date +'%Y-%m-%d')" || echo "无更新需要提交"
-          git push
+      - name: 自动提交更新
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: "自动更新博客索引 index.json"
+          file_pattern: "Blog/index.json"  # 只提交index.json的变更
