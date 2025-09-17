@@ -4,7 +4,7 @@ on:
   push:
     branches: [ main ]
     paths:
-      - 'Blog/**/*.md'
+      - '*.md'
       - '.github/scripts/generate_blog_index.py'
   workflow_dispatch:  # 新增：允许手动触发工作流
 
