@@ -1,0 +1,26 @@
+[
+  {
+    "name": "示例网站1",
+    "url": "https://example.com",
+    "description": "这是一个示例网站的简介",
+    "image": "https://satinau.cn/public/image/example1.jpg"
+  },
+  {
+    "name": "示例网站2",
+    "url": "https://example2.com",
+    "description": "这是第二个示例网站的简介",
+    "image": "https://satinau.cn/public/image/example2.jpg"
+  },
+  {
+    "name": "示例博客",
+    "url": "https://blog.example.com",
+    "description": "一个专注于分享技术文章的博客",
+    "image": "https://satinau.cn/public/image/example3.jpg"
+  },
+  {
+    "name": "示例画廊",
+    "url": "https://gallery.example.com",
+    "description": "展示各种艺术作品的画廊网站",
+    "image": "https://satinau.cn/public/image/example4.jpg"
+  }
+]
