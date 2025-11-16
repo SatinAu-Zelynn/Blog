@@ -40,7 +40,7 @@ MD3E在手表端的设计变化主要有两点
 
 2. 分段式的滚动条
 
-![](https://blog.satinau.cn/image/251116/screenshot-2025-10-02-09-31-54.png)
+![](https://blog.satinau.cn/image/251116/screenshot-2025-11-16-16-41-47.png)
 
 
 
