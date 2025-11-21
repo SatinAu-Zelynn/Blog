@@ -10,13 +10,13 @@ Xiaomi Watch 2 Pro估摸着是谷歌和部分国家和地区的法规的原因�
 
 照例过一下版本号
 
-![](https://blog.satinau.cn/image/251116/screenshot-2025-10-02-09-31-29.png)
+![](https://blog.satinau.cn/image/251116/1.webp)
 
-![](https://blog.satinau.cn/image/251116/screenshot-2025-10-02-09-31-35.png)
+![](https://blog.satinau.cn/image/251116/2.webp)
 
-![](https://blog.satinau.cn/image/251116/screenshot-2025-10-02-09-31-42.png)
+![](https://blog.satinau.cn/image/251116/3.webp)
 
-![](https://blog.satinau.cn/image/251116/screenshot-2025-10-02-09-31-54.png)
+![](https://blog.satinau.cn/image/251116/4.webp)
 
 由于SDK来到34，部分非Google商店应用会出现兼容性提示，但依旧可以正常运行。原版Google Watch Faces依旧无法使用，XDA上大佬适配的Wear OS4版本也无法使用，如果后续有适配的我会发在评论区。
 
@@ -36,11 +36,11 @@ MD3E在手表端的设计变化主要有两点
 
 1. 跟随页面滚动变化形状的不规则色块
 
-![](https://blog.satinau.cn/image/251116/IMG_20251116_164121.jpg)
+![](https://blog.satinau.cn/image/251116/5.webp)
 
 2. 分段式的滚动条
 
-![](https://blog.satinau.cn/image/251116/screenshot-2025-11-16-16-41-47.png)
+![](https://blog.satinau.cn/image/251116/6.webp)
 
 
 
