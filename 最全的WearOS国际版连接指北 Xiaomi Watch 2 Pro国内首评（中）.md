@@ -30,11 +30,11 @@
 
 以HyperOS为例
 
-![在设置-更多设置-账号与同步-谷歌基础服务中开启](https://blog.satinau.cn/image/250214/1.jpg)
+![在设置-更多设置-账号与同步-谷歌基础服务中开启](https://blog.satinau.cn/image/250214/1.webp)
 
 但是国行手机内置的GMS不包含完整FCM推送和WearOS连接服务，所以我们还要用Magisk刷入补全模块
 
-![](https://blog.satinau.cn/image/250214/2.jpg)
+![](https://blog.satinau.cn/image/250214/2.webp)
 
 ---
 
@@ -50,7 +50,7 @@
 
 在Google Play Store安装热点共享软件
 
-![](https://blog.satinau.cn/image/250214/3.jpg)
+![](https://blog.satinau.cn/image/250214/3.webp)
 
 授予root权限，开启WLAN热点，手表连接后即可检查更新
 
