@@ -8,15 +8,15 @@
 
 ### **1.外观配置**
 
-![](https://blog.satinau.cn/image/241103/IMG_20241107_223034.jpg)
+![](https://blog.satinau.cn/image/241103/1.webp)
 
 Xiaomi Watch 2 Pro 的总体外观倒是和国内的Watch 4 Sport有点像，上下两个按键加中间一个数码表冠，中框是不锈钢（S4S是钛合金），很可惜的是屏幕只有康宁玻璃，没有用上S4S的蓝宝石，充电接口和充电器与国内的S3和S4通用。
 
-![](https://blog.satinau.cn/image/241103/PXL_20241102_122225041.MP.jpg)
+![](https://blog.satinau.cn/image/241103/2.webp)
 
-![](https://blog.satinau.cn/image/241103/PXL_20241102_122244602.MP.jpg)
+![](https://blog.satinau.cn/image/241103/3.webp)
 
-![](https://blog.satinau.cn/image/241103/PXL_20241102_122254297.MP.jpg)
+![](https://blog.satinau.cn/image/241103/4.webp)
 
 ---
 
@@ -24,7 +24,7 @@ Xiaomi Watch 2 Pro 的总体外观倒是和国内的Watch 4 Sport有点像，上
 
 整套模组大致是和S3一样，算法稍有区别，就不过多说明了，新版运动健康和国内版基本一致，甚至还有中睡研没啥用的建议。
 
-![](https://blog.satinau.cn/image/241103/Screenshot_2024-11-02-12-30-12-793_com.xiaomi.wearable.png)
+![](https://blog.satinau.cn/image/241103/5.webp)
 
 运动数据在APP上使用的是Google Map，因此不太准确，需要注意。
 
@@ -34,11 +34,11 @@ Xiaomi Watch 2 Pro 的总体外观倒是和国内的Watch 4 Sport有点像，上
 
 其实这部分要分开说，在国内S4甚至是S3的生态互联是要吊打2系列的，国外小米依赖Google Home和Google Assistant，没有融合设备中心和米家小爱。但单论“生态”，软件生态，又反过来了，Google Play Store提供丰富且通用的表盘，就是一小安卓。
 
-![](https://blog.satinau.cn/image/241103/screenshot-2024-11-02-12-50-44.png)
+![](https://blog.satinau.cn/image/241103/6.webp)
 
-![](https://blog.satinau.cn/image/241103/screenshot-2024-11-02-12-50-51.png)
+![](https://blog.satinau.cn/image/241103/7.webp)
 
-![](https://blog.satinau.cn/image/241103/screenshot-2024-11-02-12-50-54.png)
+![](https://blog.satinau.cn/image/241103/8.webp)
 
 学生党甚至可以在学校刷B站（不过这表国内用不了eSIM，只能连校园网）
 
@@ -52,13 +52,13 @@ Xiaomi Watch 2 Pro 的总体外观倒是和国内的Watch 4 Sport有点像，上
 
 首先就是统一了澎湃OS的美学设计，就是图标，动画和小细节
 
-![](https://blog.satinau.cn/image/241103/screenshot-2024-11-02-13-03-43.png)
+![](https://blog.satinau.cn/image/241103/9.webp)
 
-![](https://blog.satinau.cn/image/241103/screenshot-2024-11-02-12-59-08.png)
+![](https://blog.satinau.cn/image/241103/10.webp)
 
-![](https://blog.satinau.cn/image/241103/screenshot-2024-11-02-13-01-21.png)
+![](https://blog.satinau.cn/image/241103/11.webp)
 
-![](https://blog.satinau.cn/image/241103/screenshot-2024-11-02-13-01-40.png)
+![](https://blog.satinau.cn/image/241103/12.webp)
 
 调整了震动，特别是数码表冠的震动效果，更细但是也更糊了，个人还是喜欢之前的
 
