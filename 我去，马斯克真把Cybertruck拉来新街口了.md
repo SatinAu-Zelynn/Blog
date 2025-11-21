@@ -1,4 +1,4 @@
-![](https://blog.satinau.cn/image/IMG_20240213_190217_1.jpg)
+![](https://blog.satinau.cn/image/240213.webp)
 
 ---
 
