@@ -2,7 +2,7 @@
   {
     "date": "2025-04-02 16:32",
     "content": "**海！峡！雷！霆！**<br>感谢 [@Cat-God猫神教主](https://b23.tv/dCWV3QR) 送的大番茄",
-    "images": [https://blog.satinau.cn/image/250402.webp]
+    "images": ["https://blog.satinau.cn/image/250402.webp"]
   },
   {
     "date": "2024-12-31 21:39",
@@ -23,8 +23,6 @@
   {
     "date": "2024-02-13 19:19",
     "content": "我去，马斯克真把Cybertruck拉来新街口了",
-    "images": [
-      "https://blog.satinau.cn/image/240213.webp"
-    ]
+    "images": ["https://blog.satinau.cn/image/240213.webp"]
   }
 ]
