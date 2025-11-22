@@ -1,0 +1,25 @@
+[
+  {
+    "id": 3,
+    "date": "2025-11-22 14:30",
+    "content": "测试3",
+    "images": [
+      "https://satinau.cn/public/logo_white.webp",
+      "https://satinau.cn/public/logo_black.webp"
+    ]
+  },
+  {
+    "id": 2,
+    "date": "2025-11-20 09:15",
+    "content": "测试2",
+    "images": []
+  },
+  {
+    "id": 1,
+    "date": "2025-11-15 20:00",
+    "content": "测试1",
+    "images": [
+      "https://satinau.cn/public/favicon.ico"
+    ]
+  }
+]
